@@ -1,4 +1,4 @@
-# shopify
+# cfshopify
 Shopify.com ColdFusion Rest API Client
 
 # Changes
