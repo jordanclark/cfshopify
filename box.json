@@ -1,7 +1,7 @@
 {
     "name":"cfshopify",
     "slug":"cfshopify",
-    "version":"0.5.1",
+    "version":"0.5.2",
     "author":"Jordan Clark <jordanclark@gmail.com>",
     "keywords":[
         "shopify",
@@ -13,7 +13,7 @@
     ],
     "shortDescription":"API client for shopify.com",
     "type":"modules",
-    "location":"jordanclark/cfshopify#v0.5.1",
+    "location":"jordanclark/cfshopify#v0.5.2",
     "repository":{
         "URL":"https://github.com/jordanclark/cfshopify.git",
         "type":"GIT"
