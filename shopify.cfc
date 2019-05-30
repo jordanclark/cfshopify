@@ -361,9 +361,7 @@ component {
 			out.json = arguments.json;
 		}
 		this.debugLog( out.verb & ": " & arguments.path );
-		if ( request.debug && request.dump ) {
-			this.debugLog( out );
-		}
+		// this.debugLog( out );
 		cftimer( type="debug", label="shopify request" ) {
 			cfhttp( result="http", method=out.verb, url=out.requestUrl, charset="UTF-8", throwOnError=false, password=this.appPass, timeOut=this.httpTimeOut, username=this.appKey ) {
 				if ( out.verb == "POST" || out.verb == "PUT" ) {
