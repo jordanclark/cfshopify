@@ -33,9 +33,9 @@ component {
 		return;
 	}
 
-	//  ---------------------------------------------------------------------------------------------------------- 
-	//  ORDER METHODS 
-	//  ---------------------------------------------------------------------------------------------------------- 
+	// ---------------------------------------------------------------------------------------------------------- 
+	// ORDER METHODS 
+	// ---------------------------------------------------------------------------------------------------------- 
 
 	function orderCount( string status= "", string financial_status= "", string fulfillment_status= "" ) {
 		var out= this.apiRequest(
@@ -79,9 +79,9 @@ component {
 		return out;
 	}
 
-	//  ---------------------------------------------------------------------------------------------------------- 
-	//  FULFILLMENT METHODS 
-	//  ---------------------------------------------------------------------------------------------------------- 
+	// ---------------------------------------------------------------------------------------------------------- 
+	// FULFILLMENT METHODS 
+	// ---------------------------------------------------------------------------------------------------------- 
 
 	function fulfillments( required numeric order_id, string fields= "", numeric page= 1, numeric limit= 50, string since_id= "" ) {
 		var out = "";
@@ -104,7 +104,7 @@ component {
 	}
 
 	function fulfillmentCreate( required numeric order_id, string tracking_number= "", boolean notify_customer= true, line_items= "" ) {
-		//  convert line_items string/array into array struct 
+		// convert line_items string/array into array struct 
 		if ( isSimpleValue( arguments.line_items ) && len( arguments.line_items ) ) {
 			arguments.line_items = listToArray( arguments.line_items, "," );
 		}
@@ -129,7 +129,7 @@ component {
 	}
 
 	function fulfillmentUpdate( required numeric order_id, required numeric id, string tracking_number= "", boolean notify_customer= true, line_items= "" ) {
-		//  convert line_items string/array into array struct 
+		// convert line_items string/array into array struct 
 		if ( isSimpleValue( arguments.line_items ) && len( arguments.line_items ) ) {
 			arguments.line_items = listToArray( arguments.line_items, "," );
 		}
@@ -153,9 +153,9 @@ component {
 		return out;
 	}
 
-	//  ---------------------------------------------------------------------------------------------------------- 
-	//  PRODUCT METHODS 
-	//  ---------------------------------------------------------------------------------------------------------- 
+	// ---------------------------------------------------------------------------------------------------------- 
+	// PRODUCT METHODS 
+	// ---------------------------------------------------------------------------------------------------------- 
 
 	function productCount( string collection= "" ) {
 		var out= this.apiRequest(
@@ -221,13 +221,13 @@ component {
 		var x = 0;
 		for ( item in arguments ) {
 			if ( left( item, 4 ) == "var_" ) {
-				//  copy var_ into all variants 
+				// copy var_ into all variants 
 				for ( x=1 ; x<=arrayLen( arguments.variants ) ; x++ ) {
 					arguments.variants[ x ][ listRest( item, "_" ) ] = arguments[ item ];
 				}
 				structDelete( arguments, item );
 			} else if ( reFindNoCase( "var[0-9]+_", item ) ) {
-				//  copy var1_ into a single variant 
+				// copy var1_ into a single variant 
 				x = replace( listFirst( item, "_" ), "var", "" );
 				arguments.variants[ x ][ listRest( item, "_" ) ] = arguments[ item ];
 				structDelete( arguments, item );
@@ -264,13 +264,13 @@ component {
 		var x = 0;
 		for ( item in arguments ) {
 			if ( left( item, 4 ) == "var_" ) {
-				//  copy var_ into all variants 
+				// copy var_ into all variants 
 				for ( x=1 ; x<=arrayLen( arguments.variants ) ; x++ ) {
 					arguments.variants[ x ][ listRest( item, "_" ) ] = arguments[ item ];
 				}
 				structDelete( arguments, item );
 			} else if ( reFindNoCase( "var[0-9]+_", item ) ) {
-				//  copy var1_ into a single variant 
+				// copy var1_ into a single variant 
 				x = replace( listFirst( item, "_" ), "var", "" );
 				arguments.variants[ x ][ listRest( item, "_" ) ] = arguments[ item ];
 				structDelete( arguments, item );
@@ -382,7 +382,7 @@ component {
 		} else if ( left( out.statusCode, 1 ) == 2 ) {
 			out.success = true;
 		}
-		//  parse response 
+		// parse response 
 		if ( out.success && len( out.response ) ) {
 			try {
 				out.response = deserializeJSON( out.response );
