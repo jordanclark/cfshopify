@@ -7,8 +7,9 @@ component {
 	,	required string secretKey
 	,	required string apiUrl= "https://<storeName>.myshopify.com"
 	,	numeric httpTimeOut= 120
-	,	boolean debug= ( request.debug ?: false )
+	,	boolean debug
 	) {
+		arguments.debug = ( arguments.debug ?: request.debug ?: false );
 		this.storeName = arguments.storeName;
 		this.appKey = arguments.appKey;
 		this.appPass = arguments.appPass;
@@ -28,7 +29,12 @@ component {
 				request.log( arguments.input );
 			}
 		} else if( this.debug ) {
-			cftrace( text=( isSimpleValue( arguments.input ) ? arguments.input : "" ), var=arguments.input, category="shopify", type="information" );
+			var info= ( isSimpleValue( arguments.input ) ? arguments.input : serializeJson( arguments.input ) );
+			cftrace(
+				var= "info"
+			,	category= "shopify"
+			,	type= "information"
+			);
 		}
 		return;
 	}
