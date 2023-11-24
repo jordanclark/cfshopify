@@ -5,6 +5,7 @@ component {
 	,	required string appKey
 	,	required string appPass
 	,	required string secretKey
+	,	required string accessToken
 	,	required string apiUrl= "https://<storeName>.myshopify.com"
 	,	numeric httpTimeOut= 120
 	,	boolean debug
@@ -14,6 +15,7 @@ component {
 		this.appKey = arguments.appKey;
 		this.appPass = arguments.appPass;
 		this.secretKey = arguments.secretKey;
+		this.accessToken = arguments.accessToken;
 		this.apiUrl = replaceNoCase( arguments.apiUrl, "<storeName>", this.storeName );
 		this.httpTimeOut= arguments.httpTimeOut;
 		this.debug= arguments.debug;
@@ -45,16 +47,16 @@ component {
 
 	function orderCount( string status= "", string financial_status= "", string fulfillment_status= "" ) {
 		var out= this.apiRequest(
-			path="/admin/orders/count.json"
+			path="/admin/api/2023-10/orders/count.json"
 		,	verb="GET"
 		,	args= arguments
 		);
 		return out;
 	}
 
-	function orders( string ids= "", string status= "open", string financial_status= "any", string fulfillment_status= "any", string fields= "", numeric page= 1, numeric limit= 50 ) {
+	function orders( string ids= "", string status= "open", string financial_status= "any", string fulfillment_status= "any", string fields= "", numeric limit= 50 ) {
 		var out= this.apiRequest(
-			path="/admin/orders.json"
+			path="/admin/api/2023-10/orders.json"
 		,	verb="GET"
 		,	args= arguments
 		);
@@ -63,7 +65,7 @@ component {
 
 	function order( required string id ) {
 		var out= this.apiRequest(
-			path="/admin/orders/#arguments.id#.json"
+			path="/admin/api/2023-10/orders/#arguments.id#.json"
 		,	verb="GET"
 		);
 		return out;
@@ -71,7 +73,7 @@ component {
 
 	function orderCancel( string amount= "", string restock= "", string reason= "", boolean email= false ) {
 		var out= this.apiRequest(
-			path="/admin/orders/#arguments.id#/cancel.json"
+			path="/admin/api/2023-10/orders/#arguments.id#/cancel.json"
 		,	verb="POST"
 		);
 		return out;
@@ -79,7 +81,7 @@ component {
 
 	function orderDelete( required string id ) {
 		var out= this.apiRequest(
-			path="/admin/orders/#arguments.id#.json"
+			path="/admin/api/2023-10/orders/#arguments.id#.json"
 		,	verb="DELETE"
 		);
 		return out;
@@ -92,7 +94,7 @@ component {
 	function fulfillments( required numeric order_id, string fields= "", numeric page= 1, numeric limit= 50, string since_id= "" ) {
 		var out = "";
 		out= this.apiRequest(
-			path= "/admin/orders/#arguments.order_id#/fulfillments.json"
+			path= "/admin/api/2023-10/orders/#arguments.order_id#/fulfillments.json"
 		,	verb= "GET"
 		,	args= arguments
 		);
@@ -102,7 +104,7 @@ component {
 	function fulfillment( required numeric order_id, required numeric id ) {
 		var out = "";
 		out= this.apiRequest(
-			path= "/admin/orders/#arguments.order_id#/fulfillments/#arguments.id#.json"
+			path= "/admin/api/2023-10/orders/#arguments.order_id#/fulfillments/#arguments.id#.json"
 		,	verb= "GET"
 		,	args= arguments
 		);
@@ -127,7 +129,7 @@ component {
 		"fulfillment" = arguments
 		};
 		out= this.apiRequest(
-			path= "/admin/orders/#arguments.order_id#/fulfillments.json"
+			path= "/admin/api/2023-10/orders/#arguments.order_id#/fulfillments.json"
 		,	verb= "POST"
 		,	json= json
 		);
@@ -152,7 +154,7 @@ component {
 		"fulfillment" = arguments
 		};
 		out= this.apiRequest(
-			path= "/admin/orders/#arguments.order_id#/fulfillments/#arguments.id#.json"
+			path= "/admin/api/2023-10/orders/#arguments.order_id#/fulfillments/#arguments.id#.json"
 		,	verb= "PUT"
 		,	json= json
 		);
@@ -165,7 +167,7 @@ component {
 
 	function productCount( string collection= "" ) {
 		var out= this.apiRequest(
-			path= "/admin/products/count.json"
+			path= "/admin/api/2023-10/products/count.json"
 		,	verb= "GET"
 		,	args= arguments
 		);
@@ -174,7 +176,7 @@ component {
 
 	function products( string ids= "", string fields= "", string collection= "", numeric page= 1, numeric limit= 50, string vendor= "" ) {
 		var out= this.apiRequest(
-			path= "/admin/products.json"
+			path= "/admin/api/2023-10/products.json"
 		,	verb= "GET"
 		,	args= arguments
 		);
@@ -183,7 +185,7 @@ component {
 
 	function product( required string id ) {
 		var out= this.apiRequest(
-			path= "/admin/products/#arguments.id#.json"
+			path= "/admin/api/2023-10/products/#arguments.id#.json"
 		,	verb= "GET"
 		);
 		return out;
@@ -191,7 +193,7 @@ component {
 
 	function productDelete( required string id ) {
 		var out= this.apiRequest(
-			path= "/admin/products/#arguments.id#.json"
+			path= "/admin/api/2023-10/products/#arguments.id#.json"
 		,	verb= "DELETE"
 		);
 		return out;
@@ -244,7 +246,7 @@ component {
 			"product" = arguments
 		};
 		out= this.apiRequest(
-			path= "/admin/products.json"
+			path= "/admin/api/2023-10/products.json"
 		,	verb= "POST"
 		,	json= json
 		);
@@ -290,7 +292,7 @@ component {
 			"product" = arguments
 		};
 		out= this.apiRequest(
-			path= "/admin/products/#arguments.id#.json"
+			path= "/admin/api/2023-10/products/#arguments.id#.json"
 		,	verb= "PUT"
 		,	json= json
 		);
@@ -300,7 +302,7 @@ component {
 	function variants( required string product_id, string fields= "", numeric page= 1, numeric limit= 50 ) {
 		var out = "";
 		out= this.apiRequest(
-			path= "/admin/variants/#arguments.product_id#.json"
+			path= "/admin/api/2023-10/variants/#arguments.product_id#.json"
 		,	verb= "GET"
 		,	args= arguments
 		);
@@ -313,7 +315,7 @@ component {
 		"variant" = arguments
 		};
 		out= this.apiRequest(
-			path= "/admin/products/#arguments.product_id#/variants.json"
+			path= "/admin/api/2023-10/products/#arguments.product_id#/variants.json"
 		,	verb= "POST"
 		,	json= json
 		);
@@ -326,7 +328,7 @@ component {
 		"variant" = arguments
 		};
 		out= this.apiRequest(
-			path= "/admin/variants/#arguments.id#.json"
+			path= "/admin/api/2023-10/variants/#arguments.id#.json"
 		,	verb= "PUT"
 		,	json= json
 		);
@@ -335,7 +337,7 @@ component {
 
 	function variantDelete( string product_id= "", string id= "" ) {
 		var out= this.apiRequest(
-			path= "/admin/products/#arguments.product_id#/variants/#arguments.id#.json"
+			path= "/admin/api/2023-10/products/#arguments.product_id#/variants/#arguments.id#.json"
 		,	verb= "DELETE"
 		);
 		return out;
@@ -369,9 +371,10 @@ component {
 		this.debugLog( out.verb & ": " & arguments.path );
 		// this.debugLog( out );
 		cftimer( type="debug", label="shopify request" ) {
-			cfhttp( result="http", method=out.verb, url=out.requestUrl, charset="UTF-8", throwOnError=false, password=this.appPass, timeOut=this.httpTimeOut, username=this.appKey ) {
+			cfhttp( result="http", method=out.verb, url=out.requestUrl, charset="UTF-8", throwOnError=false, timeOut=this.httpTimeOut ) {
+				cfhttpparam( name="X-Shopify-Access-Token", type="header", value="#this.accessToken#" );
+				cfhttpparam( name="Content-Type", type="header", value="application/json" );
 				if ( out.verb == "POST" || out.verb == "PUT" ) {
-					cfhttpparam( name="Content-Type", type="header", value="application/json" );
 					cfhttpparam( type="body", value=out.json );
 				}
 			}
